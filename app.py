@@ -2,39 +2,15 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from datetime import datetime
-import requests
-from io import BytesIO
+from pathlib import Path
 
 # Load data
 @st.cache_data
-@st.cache_data
 def load_data():
-    file_id = "1Jvo1fNIRf5FIUrKdAY9egzgTpuJnfcs3"
-    download_url = f"https://docs.google.com/spreadsheets/d/{file_id}/export?format=xlsx"
-    
-    try:
-        response = requests.get(download_url)
-        response.raise_for_status()
-        excel_data = BytesIO(response.content)
-        
-        for engine in ['openpyxl', 'xlrd']:
-            try:
-                df = pd.read_excel(excel_data, engine=engine)
-                if not df.empty:
-                    # Mensaje toast que desaparece automáticamente
-                    st.toast("¡Datos cargados correctamente!", icon="✅")
-                    return df
-            except Exception as e:
-                continue
-        
-        st.error("No se pudo leer el archivo Excel")
-        st.stop()
-        
-    except Exception as e:
-        st.error(f"Error al descargar el archivo: {str(e)}")
-        st.stop()
+    file_path = Path(__file__).parent / "Raw_Data_Q1_2024_and_Q1_2025.xlsx"
+    df = pd.read_excel(file_path, sheet_name='Sheet1')
+    return df
 
-# Load the data
 df = load_data()
 
 
