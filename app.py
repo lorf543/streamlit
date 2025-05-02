@@ -6,7 +6,7 @@ from datetime import datetime
 # Load data
 @st.cache_data
 def load_data():
-    file_path = "C:\\Users\\lorf5\\Desktop\\Programacion\\Python\\streamlit\\Raw_Data_Q1_2024_and_Q1_2025.xlsx"
+    file_path = ".\Raw_Data_Q1_2024_and_Q1_2025.xlsx"
     df = pd.read_excel(file_path, sheet_name='Sheet1')
     return df
 
